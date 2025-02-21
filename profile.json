@@ -1,0 +1,26 @@
+[
+  {
+    "id": "42afc470-053d-4b28-85a7-78597cda7bb5",
+    "status": "ACTIVE",
+    "visible": true,
+    "createdDate": "2025-02-21T18:22:21.264375500",
+    "name": "Admin",
+    "phone": "9999",
+    "password": "9999",
+    "age": 24,
+    "balance": 0.0,
+    "role": "ADMIN"
+  },
+  {
+    "id": "58bbe78e-dc7f-43eb-865e-62149d91802c",
+    "status": "ACTIVE",
+    "visible": true,
+    "createdDate": "2025-02-21T18:23:50.274787500",
+    "name": "Maruf",
+    "phone": "8888",
+    "password": "8888",
+    "age": 25,
+    "balance": 0.0,
+    "role": "USER"
+  }
+]
