@@ -7,6 +7,9 @@ import org.example.enums.ProfileRole;
 import org.example.util.ScannerUtil;
 
 public class ProfileUi {
+    private final BookUi bookUi = new BookUi();
+    private final GenreUi genreUi = new GenreUi();
+    private final RegionUi regionUi = new RegionUi();
     private final ProfileController profileController = new ProfileController();
 
     public void login(String phone, String password) {
@@ -42,8 +45,7 @@ public class ProfileUi {
     }
 
     private void adminStart(ProfileEntity profile) {
-        System.out.println("Admin menu");
-       /* while (true) {
+       while (true) {
             switch (menu()) {
                 case 1 -> bookUi.start(profile);
                 case 2 -> genreUi.start();
@@ -52,6 +54,6 @@ public class ProfileUi {
                     return;
                 }
             }
-        }*/
+        }
     }
 }
