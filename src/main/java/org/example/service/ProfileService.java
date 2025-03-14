@@ -8,12 +8,13 @@ import org.example.exceptions.ProfileException;
 import org.example.repository.ProfileRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProfileService {
-    public ProfileService(){
+    public ProfileService() {
         List<ProfileEntity> entities = profileRepository.readData();
         for (ProfileEntity entity : entities) {
-            if (entity.getRole().equals(ProfileRole.ADMIN)){
+            if (entity.getRole().equals(ProfileRole.ADMIN)) {
                 return;
             }
         }
@@ -26,22 +27,28 @@ public class ProfileService {
         entity.setPhone("9999");
         profileRepository.save(List.of(entity));
     }
+
     private final ProfileRepository profileRepository = new ProfileRepository();
 
     public ProfileEntity login(String phone, String password) {
-        ProfileEntity profile = null;
+        /*ProfileEntity profile = null;
         List<ProfileEntity> entities = profileRepository.readData();
         for (ProfileEntity entity : entities) {
             if (entity.getPhone().equals(phone) && entity.getPassword().equals(password)) {
                 profile = entity;
             }
-        }
-        if (profile != null) {
+        }*/
+        Optional<ProfileEntity> optional = profileRepository.readData().stream()
+                .filter(p -> p.getPhone().equals(phone) && p.getPassword().equals(password))
+                .findAny();
+        if (optional.isPresent()) {
+            ProfileEntity profile = optional.get();
             if (profile.getStatus().equals(GeneralStatus.NOT_ACTIVE) || profile.getStatus().equals(GeneralStatus.BLOCK)) {
                 throw new ProfileException("Profile is blocked or not active");
             }
+            return profile;
         }
-        return profile;
+        return null;
     }
 
 
@@ -59,16 +66,16 @@ public class ProfileService {
     }
 
     private void checkProfile(ProfileRequest request) {
-        if (request.getPhone() == null || request.getPhone().isBlank()){
+        if (request.getPhone() == null || request.getPhone().isBlank()) {
             throw new ProfileException("Phone error");
         }
-        if (request.getPassword() == null || request.getPassword().isBlank()){
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
             throw new ProfileException("Password error");
         }
-        if (request.getName() == null || request.getName().isBlank()){
+        if (request.getName() == null || request.getName().isBlank()) {
             throw new ProfileException("Name error");
         }
-        if (request.getAge() == 0){
+        if (request.getAge() == 0) {
             throw new ProfileException("Age error");
         }
     }
